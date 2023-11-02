@@ -1,9 +1,15 @@
 import { cartModel } from "../models/carts.models.js";
+import mongoose from 'mongoose';
 
 // GET api/carts/:cid - Obtener productos en un carrito
+
+
 export const getCart = async (req, res) => {
-    try {
-      const { cid } = req.params;
+  try {
+    const { cid } = req.params;
+
+    // Verificar si 'cid' es un ObjectId válido
+    if (mongoose.Types.ObjectId.isValid(cid)) {
       const cart = await cartModel.findById(cid).populate('products.id_prod');
       
       if (!cart) {
@@ -11,11 +17,16 @@ export const getCart = async (req, res) => {
       }
       
       res.json(cart);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error interno del servidor' });
+    } else {
+      // Manejar el caso en el que 'cid' no es un ObjectId válido
+      res.status(400).json({ message: 'ID de carrito no válido' });
     }
-  };
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+};
+
 
   // DELETE api/carts/:cid/products/:pid - Eliminar producto del carrito
 

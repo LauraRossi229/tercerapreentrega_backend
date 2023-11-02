@@ -50,8 +50,11 @@ export const Register = () => {
                     <label htmlFor="password" className="form-label">Contraseña: </label>
                     <input type="password" name="password" className="form-control" />
                 </div>
-                <button type="submit" className="btn btn-primary">Registrarse</button>
-            </form>
+                <div className="btn-group mb-3"> {/* Agrega la clase btn-group y mb-3 para espacio inferior */}
+                    <button type="submit" className="btn btn-primary mx-2">Registrarse</button>
+                    <button type="button" className="btn btn-success mx-2" onClick={() => navigate('/products')}>Inicio</button>
+                </div>
+             </form>
 
         </div>
     )
